@@ -112,7 +112,7 @@ class FullReportCommandMessage(RPCMessage):
         async_backend: Optional[bool] = True
 
     class Response(RPCMessage.Response):
-        status: Optional[int] = MQTT_STATUS_CODE.SUCCESS
+        status: Optional[int] = BROKER_STATUS_CODE.SUCCESS
         msg: Optional[str] = ''
         report: Optional[str] = ''
 
