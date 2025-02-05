@@ -30,6 +30,7 @@ class BotCommands(Node):
         self._config_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.CONFIG}'
         self._status_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.STATUS}'
         self._history_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.HISTORY}'
+        self._full_report_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.FULL_REPORT}'
         self._balance_limit_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.BALANCE_LIMIT}'
         self._balance_paper_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.BALANCE_PAPER}'
         self._command_shortcut_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.COMMAND_SHORTCUT}'
@@ -80,6 +81,10 @@ class BotCommands(Node):
         self._history_cmd = self.create_rpc_client(
             msg_type=HistoryCommandMessage,
             rpc_name=self._history_uri
+        )
+        self._full_report_cmd = self.create_rpc_client(
+            msg_type=FullReportCommandMessage,
+            rpc_name=self._full_report_uri
         )
         # print(f'[*] Created RPC client for history command @ {self._history_uri}')
         self._balance_limit_cmd = self.create_rpc_client(
@@ -168,6 +173,17 @@ class BotCommands(Node):
             msg=HistoryCommandMessage.Request(async_backend=async_backend),
             timeout=timeout
         )
+        return resp
+
+    def full_report(self,
+                async_backend: bool = False,
+                timeout: int = 5
+                ):
+        resp = (self._full_report_cmd.call(
+            msg=FullReportCommandMessage.Request(async_backend=async_backend),
+            timeout=timeout
+        ))
+
         return resp
 
     def balance_limit(self,
