@@ -6,6 +6,7 @@ class CommandTopicSpecs:
     IMPORT: str = '/import'
     STATUS: str = '/status'
     HISTORY: str = '/history'
+    FULL_REPORT: str = '/full_report'
     BALANCE_LIMIT: str = '/balance/limit'
     BALANCE_PAPER: str = '/balance/paper'
     COMMAND_SHORTCUT: str = '/command_shortcuts'
