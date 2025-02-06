@@ -177,10 +177,11 @@ class BotCommands(Node):
 
     def full_report(self,
                 async_backend: bool = False,
-                timeout: int = 5
+                timeout: int = 5,
+                days: int = 0,
                 ):
         resp = (self._full_report_cmd.call(
-            msg=FullReportCommandMessage.Request(async_backend=async_backend),
+            msg=FullReportCommandMessage.Request(async_backend=async_backend, days=days),
             timeout=timeout
         ))
 
