@@ -5,7 +5,7 @@ from hbotrc import BotListener, BotCommands
 
 
 async def run_commands(client):
-    resp = client.full_report(10)
+    resp = client.full_report(days=10)
     print(f'Full Report Command Response: {resp}')
     await asyncio.sleep(1)
 
