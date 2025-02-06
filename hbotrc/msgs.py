@@ -115,6 +115,7 @@ class FullReportCommandMessage(RPCMessage):
         status: Optional[int] = BROKER_STATUS_CODE.SUCCESS
         msg: Optional[str] = ''
         report: Optional[str] = ''
+        trades: Optional[List[Any]] = []
 
 class BalanceLimitCommandMessage(RPCMessage):
     class Request(RPCMessage.Request):
