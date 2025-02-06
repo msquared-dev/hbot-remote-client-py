@@ -106,7 +106,7 @@ class HistoryCommandMessage(RPCMessage):
 
 class FullReportCommandMessage(RPCMessage):
     class Request(RPCMessage.Request):
-        days: Optional[float] = 0
+        days: Optional[float] = 1
         verbose: Optional[bool] = False
         precision: Optional[int] = None
         async_backend: Optional[bool] = True
