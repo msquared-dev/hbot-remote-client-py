@@ -1,7 +1,8 @@
-from typing import Any, List, Optional, Tuple, Dict
-from commlib.msg import PubSubMessage, RPCMessage, HeartbeatMessage
-from pydantic import root_validator, validator
 import datetime
+from typing import Any, Dict, List, Optional, Tuple
+
+from commlib.msg import PubSubMessage, RPCMessage
+from pydantic import validator
 
 
 class BROKER_STATUS_CODE:
@@ -104,6 +105,7 @@ class HistoryCommandMessage(RPCMessage):
         msg: Optional[str] = ''
         trades: Optional[List[Any]] = []
 
+
 class FullReportCommandMessage(RPCMessage):
     class Request(RPCMessage.Request):
         days: Optional[float] = 1
@@ -114,8 +116,9 @@ class FullReportCommandMessage(RPCMessage):
     class Response(RPCMessage.Response):
         status: Optional[int] = BROKER_STATUS_CODE.SUCCESS
         msg: Optional[str] = ''
-        report: Optional[Dict[str, Any]] = dict()
+        report: Optional[str] = dict()
         trades: Optional[List[Any]] = []
+
 
 class BalanceLimitCommandMessage(RPCMessage):
     class Request(RPCMessage.Request):
