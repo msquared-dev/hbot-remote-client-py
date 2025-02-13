@@ -1,7 +1,7 @@
 import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
-from commlib.msg import PubSubMessage, RPCMessage
+from commlib.msg import PubSubMessage, RPCMessage, HeartbeatMessage
 from pydantic import validator
 
 
