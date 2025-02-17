@@ -13,8 +13,8 @@ def get_client(host, port, username, password, bot_id):
     return BotCommands(
         host=host,
         port=int(port),
-        username=username,
-        password=password,
+        username='',
+        password='',
         bot_id=bot_id,
     )
 
