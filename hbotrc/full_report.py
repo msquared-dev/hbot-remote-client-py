@@ -29,9 +29,9 @@ def main():
     try:
         client = get_client(host, port, username, password, bot_id)
         result = asyncio.new_event_loop().run_until_complete(run_full_report(client))
-        print(json.dumps(result))  # Print JSON result to stdout
+        print(result)  # Print JSON result to stdout
     except Exception as e:
-        print(json.dumps({"error": f"Error getting full report: {str(e)}"}))
+        print({"error": f"Error getting full report: {str(e)}"})
 
 if __name__ == "__main__":
     main()
