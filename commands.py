@@ -5,13 +5,9 @@ from hbotrc import BotListener, BotCommands
 import pprint
 import json
 async def run_commands(client):
-    # resp = client.start()
-    # resp = client.status()
 
-    await asyncio.sleep(1)
     resp = client.full_report(days=10)
     pprint.pprint(json.loads(resp.report))
-    await asyncio.sleep(1)
 
 
 if __name__ == "__main__":
