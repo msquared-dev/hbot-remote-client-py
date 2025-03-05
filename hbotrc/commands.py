@@ -177,7 +177,7 @@ class BotCommands(Node):
 
     def full_report(self,
                 async_backend: bool = False,
-                timeout: int = 5,
+                timeout: int = 20,
                 days: int = 0,
                 ):
         resp = (self._full_report_cmd.call(
