@@ -7,7 +7,7 @@ import json
 async def run_commands(client):
 
     resp = client.full_report(days=10)
-    pprint.pprint(json.loads(resp.report))
+    pprint.pprint(resp.report)
 
 
 if __name__ == "__main__":
