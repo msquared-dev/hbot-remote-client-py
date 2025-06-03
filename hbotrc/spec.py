@@ -1,3 +1,5 @@
+from enum import Enum
+
 
 class CommandTopicSpecs:
     START: str = '/start'
@@ -10,6 +12,9 @@ class CommandTopicSpecs:
     BALANCE_LIMIT: str = '/balance/limit'
     BALANCE_PAPER: str = '/balance/paper'
     COMMAND_SHORTCUT: str = '/command_shortcuts'
+    ORDERS_CANCEL: str = "/orders/cancel_all"
+    PLACE_LIMIT: str = "/orders/place_limit"
+    TRADING_PAIRS: str = "/trading_pairs"
 
 
 class TopicSpecs:
@@ -20,3 +25,8 @@ class TopicSpecs:
     NOTIFICATIONS: str = '/notify'
     HEARTBEATS: str = '/hb'
     EXTERNAL_EVENTS: str = '/external/event/*'
+
+class TradeType(Enum):
+    BUY = 1
+    SELL = 2
+    RANGE = 3
