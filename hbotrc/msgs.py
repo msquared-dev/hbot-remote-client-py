@@ -1,8 +1,11 @@
 import datetime
+from decimal import Decimal
 from typing import Any, Dict, List, Optional, Tuple
 
 from commlib.msg import PubSubMessage, RPCMessage, HeartbeatMessage
-from pydantic import validator
+from pydantic import ConfigDict, validator
+
+from hbotrc.spec import TradeType
 
 
 class BROKER_STATUS_CODE:
@@ -152,3 +155,36 @@ class ExternalEvent(PubSubMessage):
     @validator('timestamp', pre=True, always=True)
     def set_ts_now(cls, v):
         return v or datetime.now().timestamp()
+
+
+class CancelOrdersCommandMessage(RPCMessage):
+    class Response(RPCMessage.Response):
+        status: Optional[int] = BROKER_STATUS_CODE.SUCCESS
+        msg: Optional[str] = ""
+        data: Optional[Dict[str, Any]] = {}
+
+
+class PlaceLimitCommandMessage(RPCMessage):
+    class Request(RPCMessage.Request):
+        model_config = ConfigDict(use_enum_values=True)
+
+        exchange: str
+        trading_pair: str
+        amount: Decimal
+        price: Decimal
+        side: TradeType
+
+    class Response(RPCMessage.Response):
+        status: Optional[int] = BROKER_STATUS_CODE.SUCCESS
+        msg: Optional[str] = ""
+        order_data: Optional[Dict[str, Any]] = {}
+
+
+class TradingPairsCommandMessage(RPCMessage):
+    class Request(RPCMessage.Request):
+        exchanges: List[str]
+
+    class Response(RPCMessage.Response):
+        status: Optional[int] = BROKER_STATUS_CODE.SUCCESS
+        msg: Optional[str] = ""
+        data: Optional[Dict[str, Any]] = {}

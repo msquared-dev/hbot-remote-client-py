@@ -34,6 +34,9 @@ class BotCommands(Node):
         self._balance_limit_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.BALANCE_LIMIT}'
         self._balance_paper_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.BALANCE_PAPER}'
         self._command_shortcut_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.COMMAND_SHORTCUT}'
+        self._cancel_orders_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.ORDERS_CANCEL}'
+        self._place_limit_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.PLACE_LIMIT}'
+        self._trading_pairs_uri = f'{topic_prefix}{TopicSpecs.COMMANDS.TRADING_PAIRS}'
 
         conn_params = ConnectionParameters(
             host=host,
@@ -102,6 +105,18 @@ class BotCommands(Node):
             rpc_name=self._command_shortcut_uri
         )
         # print(f'[*] Created RPC client for command shortcuts @ {self._command_shortcut_uri}')
+        self._cancel_orders_cmd = self.create_rpc_client(
+            msg_type=CancelOrdersCommandMessage, rpc_name=self._cancel_orders_uri
+        )
+        # print(f'[*] Created RPC client for cancel orders command @ {self._cancel_orders_uri}')
+        self._place_limit_cmd = self.create_rpc_client(
+            msg_type=PlaceLimitCommandMessage, rpc_name=self._place_limit_uri
+        )
+        # print(f'[*] Created RPC client for place limit command @ {self._place_limit_uri}')
+        self._trading_pairs_cmd = self.create_rpc_client(
+            msg_type=TradingPairsCommandMessage, rpc_name=self._trading_pairs_uri
+        )
+        # print(f'[*] Created RPC client for trading pairs command @ {self._trading_pairs_uri}')
 
     def start(self,
               log_level: str = None,
@@ -226,5 +241,38 @@ class BotCommands(Node):
                 params=params
             ),
             timeout=timeout
+        )
+        return resp
+
+    def cancel_orders(self, timeout: int = 5):
+        resp = self._cancel_orders_cmd.call(
+            msg=CancelOrdersCommandMessage.Request(), timeout=timeout
+        )
+        return resp
+
+    def place_limit_order(
+        self,
+        exchange: str,
+        trading_pair: str,
+        amount: Decimal,
+        price: Decimal,
+        side: TradeType,
+        timeout: int = 5,
+    ):
+        resp = self._place_limit_cmd.call(
+            msg=PlaceLimitCommandMessage.Request(
+                exchange=exchange,
+                trading_pair=trading_pair,
+                amount=amount,
+                price=price,
+                side=side.value,
+            ),
+            timeout=timeout,
+        )
+        return resp
+
+    def trading_pairs(self, exchanges: List[str], timeout: int = 5):
+        resp = self._trading_pairs_cmd.call(
+            msg=TradingPairsCommandMessage.Request(exchanges=exchanges), timeout=timeout
         )
         return resp
